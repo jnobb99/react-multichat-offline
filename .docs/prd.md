@@ -257,20 +257,20 @@ Cada tarefa deve resultar em algo funcional ou visualmente verificável antes de
 ### Fase 4 — Toggle usuário / robô
 
 #### Tarefa 4.1 — Componente SenderToggle
-- [ ] Criar `SenderToggle.tsx` com botão ícone + texto
-- [ ] Estados visuais distintos para `user` e `robot` (ícone e label diferentes)
-- [ ] Callback `onToggle` alterna o remetente
+- [x] Criar `SenderToggle.tsx` com botão ícone + texto
+- [x] Estados visuais distintos para `user` e `robot` (ícone e label diferentes)
+- [x] Callback `onToggle` alterna o remetente
 - **Verificação:** clique alterna visualmente entre usuário e robô
 
 #### Tarefa 4.2 — Integrar toggle ao fluxo de envio
-- [ ] State `sender: Sender` em `Chat.tsx` (padrão: `'user'`)
-- [ ] `handleSend` usa `sender` ao criar a `Message`
-- [ ] Posicionar `SenderToggle` à esquerda do card em `ChatInput`
+- [x] State `sender: Sender` em `Chat.tsx` (padrão: `'user'`)
+- [x] `handleSend` usa `sender` ao criar a `Message`
+- [x] Posicionar `SenderToggle` à esquerda do card em `ChatInput`
 - **Verificação:** mensagens enviadas com toggle em robô aparecem à esquerda
 
 #### Tarefa 4.3 — Borda roxa no modo robô
-- [ ] Quando `sender === 'robot'`, aplicar `border-purple-*` no card de input
-- [ ] Quando `sender === 'user'`, borda padrão (cinza ou transparente)
+- [x] Quando `sender === 'robot'`, aplicar `border-purple-*` no card de input
+- [x] Quando `sender === 'user'`, borda padrão (cinza ou transparente)
 - **Verificação:** borda roxa visível apenas com toggle em robô
 
 ---
