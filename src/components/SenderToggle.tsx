@@ -44,11 +44,10 @@ export default function SenderToggle({ sender, onToggle }: SenderToggleProps) {
     <button
       type="button"
       onClick={onToggle}
-      className={`flex shrink-0 items-center justify-center rounded p-2 transition-colors ${
-        isUser
+      className={`flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-2 transition-colors ${isUser
           ? 'text-stone-700 hover:bg-stone-100'
           : 'text-purple-700 hover:bg-purple-50'
-      }`}
+        }`}
       aria-label={isUser ? 'Enviar como usuário' : 'Enviar como robô'}
     >
       {isUser ? <UserIcon /> : <RobotIcon />}

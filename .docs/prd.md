@@ -278,16 +278,16 @@ Cada tarefa deve resultar em algo funcional ou visualmente verificável antes de
 ### Fase 5 — Polimento
 
 #### Tarefa 5.1 — Ajustes visuais finais
-- [ ] Espaçamento consistente entre bolhas (`gap-2` ou `space-y-2`)
-- [ ] Padding interno nas bolhas e no card de input
-- [ ] Transição suave na borda do card ao alternar toggle (opcional: `transition-colors`)
-- [ ] Revisar contraste e legibilidade no fundo marrom
+- [x] Espaçamento consistente entre bolhas (`gap-2` ou `space-y-2`)
+- [x] Padding interno nas bolhas e no card de input
+- [x] Transição suave na borda do card ao alternar toggle (opcional: `transition-colors`)
+- [x] Revisar contraste e legibilidade no fundo marrom
 - **Verificação:** UI coesa e alinhada com as especificações visuais
 
 #### Tarefa 5.2 — Revisão de qualidade
-- [ ] Rodar `npm run lint` e corrigir issues
-- [ ] Rodar `npm run build` sem erros
-- [ ] Teste manual do fluxo completo:
+- [x] Rodar `npm run lint` e corrigir issues
+- [x] Rodar `npm run build` sem erros
+- [x] Teste manual do fluxo completo:
   - Estado vazio → enviar como usuário → enviar como robô → alternar toggle → scroll automático
 - **Verificação:** build e lint limpos; fluxo manual OK
 
@@ -309,18 +309,18 @@ Cada tarefa deve resultar em algo funcional ou visualmente verificável antes de
 
 ## 12. Critérios de aceite (checklist final)
 
-- [ ] Fundo marrom claro em tela cheia
-- [ ] Chat centralizado com `max-w-2xl`
-- [ ] Mensagens de usuário à direita, robô à esquerda
-- [ ] Bolhas com fundo neutro
-- [ ] Estado vazio quando sem mensagens
-- [ ] Auto-scroll ao enviar
-- [ ] Input em card branco fixo no rodapé
-- [ ] Textarea com altura dinâmica
-- [ ] Botão enviar desabilitado sem texto
-- [ ] Enter envia, Shift+Enter quebra linha
-- [ ] Toggle ícone + texto; padrão usuário
-- [ ] Borda roxa no card quando modo robô
-- [ ] Histórico perdido ao recarregar a página
-- [ ] Tipos em `src/types/`, componentes em `src/components/`
-- [ ] Build e lint sem erros
+- [x] Fundo marrom claro em tela cheia
+- [x] Chat centralizado com `max-w-2xl`
+- [x] Mensagens de usuário à direita, robô à esquerda
+- [x] Bolhas com fundo neutro
+- [x] Estado vazio quando sem mensagens
+- [x] Auto-scroll ao enviar
+- [x] Input em card branco fixo no rodapé
+- [x] Textarea com altura dinâmica
+- [x] Botão enviar desabilitado sem texto
+- [x] Enter envia, Shift+Enter quebra linha
+- [x] Toggle ícone + texto; padrão usuário
+- [x] Borda roxa no card quando modo robô
+- [x] Histórico perdido ao recarregar a página
+- [x] Tipos em `src/types/`, componentes em `src/components/`
+- [x] Build e lint sem erros
