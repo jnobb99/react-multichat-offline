@@ -1,7 +1,5 @@
-export default function App() {
-  return (
-    <div>
+import Chat from './components/Chat'
 
-    </div>
-  )
+export default function App() {
+  return <Chat />
 }

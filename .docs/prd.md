@@ -191,15 +191,15 @@ Cada tarefa deve resultar em algo funcional ou visualmente verificável antes de
 ### Fase 1 — Fundação
 
 #### Tarefa 1.1 — Tipos e estrutura de pastas
-- [ ] Criar `src/types/message.ts` com `Sender` e `Message`
-- [ ] Criar pastas `src/components/` (se ainda não existir)
+- [x] Criar `src/types/message.ts` com `Sender` e `Message`
+- [x] Criar pastas `src/components/` (se ainda não existir)
 - **Verificação:** projeto compila sem erros (`npm run build`)
 
 #### Tarefa 1.2 — Layout base da página
-- [ ] Criar `Chat.tsx` com estrutura mínima
-- [ ] Aplicar fundo marrom claro na página inteira
-- [ ] Container `max-w-2xl mx-auto` com altura `min-h-screen` (ou `h-dvh`)
-- [ ] Conectar `<Chat />` em `App.tsx`
+- [x] Criar `Chat.tsx` com estrutura mínima
+- [x] Aplicar fundo marrom claro na página inteira
+- [x] Container `max-w-2xl mx-auto` com altura `min-h-screen` (ou `h-dvh`)
+- [x] Conectar `<Chat />` em `App.tsx`
 - **Verificação:** tela com fundo marrom e container centralizado visível
 
 ---
