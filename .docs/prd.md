@@ -207,22 +207,22 @@ Cada tarefa deve resultar em algo funcional ou visualmente verificável antes de
 ### Fase 2 — Histórico de mensagens
 
 #### Tarefa 2.1 — Estado e componente de bolha
-- [ ] State `messages: Message[]` em `Chat.tsx` (inicialmente vazio ou com dados mock para desenvolvimento)
-- [ ] Criar `MessageBubble.tsx`: recebe `message`, alinha à direita (`user`) ou esquerda (`robot`), bolha neutra
+- [x] State `messages: Message[]` em `Chat.tsx` (inicialmente vazio ou com dados mock para desenvolvimento)
+- [x] Criar `MessageBubble.tsx`: recebe `message`, alinha à direita (`user`) ou esquerda (`robot`), bolha neutra
 - **Verificação:** bolhas mockadas renderizam com alinhamento correto
 
 #### Tarefa 2.2 — Lista de mensagens
-- [ ] Criar `MessageList.tsx`: mapeia `messages` em `MessageBubble`
-- [ ] Área com `flex-1 overflow-y-auto` ocupando espaço acima do input
-- [ ] Remover mocks; usar state real
+- [x] Criar `MessageList.tsx`: mapeia `messages` em `MessageBubble`
+- [x] Área com `flex-1 overflow-y-auto` ocupando espaço acima do input
+- [x] Remover mocks; usar state real
 - **Verificação:** lista renderiza mensagens do state em ordem cronológica
 
 #### Tarefa 2.3 — Estado vazio
-- [ ] Em `MessageList.tsx`, quando `messages.length === 0`, exibir texto de empty state
+- [x] Em `MessageList.tsx`, quando `messages.length === 0`, exibir texto de empty state
 - **Verificação:** mensagem de estado vazio aparece ao iniciar o app
 
 #### Tarefa 2.4 — Auto-scroll
-- [ ] Ref no final da lista; `useEffect` rola para o final quando `messages` muda
+- [x] Ref no final da lista; `useEffect` rola para o final quando `messages` muda
 - **Verificação:** ao adicionar mensagem (via mock temporário ou input), scroll vai para a última
 
 ---
