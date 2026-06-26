@@ -230,26 +230,26 @@ Cada tarefa deve resultar em algo funcional ou visualmente verificável antes de
 ### Fase 3 — Input e envio
 
 #### Tarefa 3.1 — Card de input fixo
-- [ ] Criar `ChatInput.tsx` com card branco fixo no rodapé do container do chat
-- [ ] Layout flex: `[espaço toggle] [textarea flex-1] [botão enviar]`
-- [ ] Garantir padding inferior no `MessageList` para o conteúdo não ficar oculto atrás do card
+- [x] Criar `ChatInput.tsx` com card branco fixo no rodapé do container do chat
+- [x] Layout flex: `[espaço toggle] [textarea flex-1] [botão enviar]`
+- [x] Garantir padding inferior no `MessageList` para o conteúdo não ficar oculto atrás do card
 - **Verificação:** card branco fixo no canto inferior, histórico scrollável acima
 
 #### Tarefa 3.2 — Textarea com auto-resize
-- [ ] Textarea multilinha que cresce com o conteúdo (mín. 1 linha, máx. ~6 linhas)
-- [ ] Placeholder opcional (ex.: "Digite uma mensagem...")
+- [x] Textarea multilinha que cresce com o conteúdo (mín. 1 linha, máx. ~6 linhas)
+- [x] Placeholder opcional (ex.: "Digite uma mensagem...")
 - **Verificação:** textarea expande e contrai conforme o texto
 
 #### Tarefa 3.3 — Botão de enviar
-- [ ] Botão à direita do card
-- [ ] Desabilitado quando `text.trim() === ''`
-- [ ] Ícone ou label "Enviar"
+- [x] Botão à direita do card
+- [x] Desabilitado quando `text.trim() === ''`
+- [x] Ícone ou label "Enviar"
 - **Verificação:** botão só habilita com texto; clique dispara callback `onSend`
 
 #### Tarefa 3.4 — Lógica de envio
-- [ ] `handleSend` em `Chat.tsx`: valida trim, cria `Message`, adiciona ao state, limpa input
-- [ ] Conectar `ChatInput` ao `handleSend`
-- [ ] **Enter** envia; **Shift+Enter** quebra linha (`onKeyDown` no textarea)
+- [x] `handleSend` em `Chat.tsx`: valida trim, cria `Message`, adiciona ao state, limpa input
+- [x] Conectar `ChatInput` ao `handleSend`
+- [x] **Enter** envia; **Shift+Enter** quebra linha (`onKeyDown` no textarea)
 - **Verificação:** mensagens aparecem no histórico com alinhamento de usuário (padrão)
 
 ---
