@@ -34,16 +34,19 @@ export default function Chat() {
   }
 
   return (
-    <div className="flex min-h-dvh bg-stone-200">
-      <button
-        type="button"
-        onClick={() => setIsSidebarOpen(true)}
-        className="fixed left-4 top-4 z-30 rounded-lg bg-stone-900 px-3 py-2 text-xl text-white shadow-md md:hidden"
-        aria-label="Abrir menu de conversas"
-        aria-expanded={isSidebarOpen}
-      >
-        ☰
-      </button>
+    <div className="h-dvh overflow-hidden bg-stone-200 md:grid md:grid-cols-[18rem_minmax(0,1fr)]">
+      {!isSidebarOpen && (
+        <button
+          type="button"
+          onClick={() => setIsSidebarOpen(true)}
+          className="fixed left-4 top-4 z-30 rounded-lg bg-stone-900 px-3 py-2 text-xl text-white shadow-md md:hidden"
+          aria-label="Abrir menu de conversas"
+          aria-expanded={false}
+          aria-controls="chat-sidebar"
+        >
+          ☰
+        </button>
+      )}
 
       <ChatSidebar
         chatIds={conversations.map((conversation) => conversation.id)}
@@ -63,7 +66,7 @@ export default function Chat() {
         onClose={() => setIsSidebarOpen(false)}
       />
 
-      <main className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col">
+      <main className="mx-auto flex h-dvh min-h-0 w-full max-w-2xl flex-col pt-20 md:pt-0">
         <MessageList messages={messages} hasActiveChat={activeChatId !== null} />
         <ChatInput
           sender={sender}
