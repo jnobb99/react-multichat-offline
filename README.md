@@ -1,26 +1,38 @@
-# Chat Offline
+# Chat Offline Multiconversa
 
-Aplicação de chat em janela única onde o usuário envia mensagens alternando entre dois remetentes: **usuário** (alinhado à direita) e **robô** (alinhado à esquerda). O histórico vive apenas em memória (React state) — ao recarregar a página, as mensagens são perdidas.
+Aplicação de chat offline em React para criar e alternar entre múltiplas conversas, mantendo o histórico em armazenamento local do navegador. Cada conversa guarda suas próprias mensagens e pode ser selecionada, criada ou excluída pela sidebar.
+
+## Visão geral
+
+O projeto começou como um chat de um único histórico, mas a evolução recente transformou a aplicação em um painel de conversas com o seguinte fluxo:
+
+- o usuário cria uma conversa nova;
+- seleciona uma conversa ativa;
+- envia mensagens alternando entre remetente usuário e robô;
+- o estado é persistido em localStorage usando Zustand;
+- o histórico é restaurado ao recarregar a página.
 
 ## Funcionalidades
 
-- **Histórico em memória** — mensagens ordenadas cronologicamente, sem persistência
-- **Dois remetentes** — toggle no input alterna quem envia a próxima mensagem (padrão: usuário)
-- **Layout responsivo** — container centralizado (`max-w-2xl`) em fundo marrom claro
-- **Input fixo no rodapé** — card branco permanece visível durante o scroll do histórico
-- **Textarea dinâmico** — altura ajusta conforme o conteúdo (mín. 1 linha, máx. ~6 linhas)
-- **Atalhos de teclado** — `Enter` envia; `Shift + Enter` insere quebra de linha
-- **Estado vazio** — mensagem indicativa quando não há mensagens
-- **Auto-scroll** — rola automaticamente para a última mensagem ao enviar
-- **Modo robô** — borda roxa no card de input quando o remetente ativo é o robô
+- **Múltiplas conversas** — cada chat tem seu próprio conjunto de mensagens e ID único
+- **Persistência local** — o store usa `zustand/middleware` com `persist` para salvar as conversas no navegador
+- **Sidebar de navegação** — cria, seleciona e exclui conversas com visual responsivo
+- **Chat ativo** — mensagens são adicionadas somente à conversa selecionada
+- **Dois remetentes** — toggle alterna entre usuário e robô antes de enviar
+- **Input com textarea dinâmico** — cresce até um limite visual, sem quebrar o layout
+- **Enviar por teclado** — `Enter` envia; `Shift + Enter` cria quebra de linha
+- **Auto-scroll** — rola automaticamente para a última mensagem do chat ativo
+- **Estados vazios** — exibe mensagem apropriada quando não há conversa ou quando a conversa ainda não possui mensagens
+- **Layout responsivo** — sidebar móvel e painel principal em tela grande
 
 ## Stack
 
 | Tecnologia | Uso |
 |---|---|
-| [Vite](https://vite.dev/) | Build e dev server |
-| [React 19](https://react.dev/) | UI e estado |
+| [Vite](https://vite.dev/) | Build e servidor de desenvolvimento |
+| [React 19](https://react.dev/) | Interface e renderização |
 | [TypeScript](https://www.typescriptlang.org/) | Tipagem estática |
+| [Zustand](https://zustand-demo.pmndrs.com/) | Estado global e persistência |
 | [Tailwind CSS 4](https://tailwindcss.com/) | Estilização |
 | [Oxlint](https://oxc.rs/docs/guide/usage/linter) | Lint |
 
@@ -45,28 +57,36 @@ npm run lint
 
 ## Uso
 
-1. Digite uma mensagem no campo de texto na parte inferior da tela.
-2. Use o toggle à esquerda para alternar entre **Usuário** e **Robô** antes de enviar.
-3. Envie com `Enter` ou pelo botão à direita (desabilitado quando o campo está vazio).
-4. Mensagens do usuário aparecem alinhadas à direita; mensagens do robô, à esquerda.
+1. Abra o app e use o botão de menu para abrir a sidebar em telas menores.
+2. Clique em “Nova conversa” para criar um novo chat.
+3. Selecione uma conversa na lista para torná-la ativa.
+4. Alterna entre usuário e robô no campo de entrada.
+5. Digite a mensagem e envie com `Enter` ou pelo botão “Enviar”.
+6. O histórico da conversa atual é mantido em localStorage mesmo após recarregar a página.
 
 ## Estrutura do projeto
 
-```
+```text
 src/
-├── types/
-│   └── message.ts          # Sender, Message
 ├── components/
-│   ├── Chat.tsx            # Estado e orquestração do layout
-│   ├── MessageList.tsx     # Lista, estado vazio e auto-scroll
-│   ├── MessageBubble.tsx   # Bolha individual
-│   ├── ChatInput.tsx       # Card fixo: toggle + textarea + enviar
-│   └── SenderToggle.tsx    # Alternância usuário/robô
-├── App.tsx                 # Renderiza <Chat />
-└── index.css               # Import do Tailwind
+│   ├── Chat.tsx            # Orquestração geral do layout e do chat ativo
+│   ├── ChatInput.tsx       # Campo de mensagem, toggle de remetente e envio
+│   ├── ChatSidebar.tsx     # Navegação entre conversas e criação/exclusão
+│   ├── MessageBubble.tsx   # Bolha individual da mensagem
+│   ├── MessageList.tsx     # Lista de mensagens e estados vazios
+│   └── SenderToggle.tsx    # Alternância entre usuário e robô
+├── stores/
+│   ├── chatStore.ts        # Store com persistência e operações das conversas
+│   └── chatStore.test.ts   # Testes do store
+├── types/
+│   ├── conversation.ts     # Modelo de conversa
+│   └── message.ts          # Modelo de mensagem e tipo Sender
+├── App.tsx                 # Renderiza o componente principal
+├── index.css               # Estilos globais e import do Tailwind
+└── main.tsx                # Entrada da aplicação
 ```
 
-### Modelo de dados
+## Modelo de dados
 
 ```ts
 type Sender = 'user' | 'robot'
@@ -76,16 +96,28 @@ type Message = {
   text: string
   sender: Sender
 }
+
+type Conversation = {
+  id: string
+  messages: Message[]
+}
 ```
+
+## Persistência
+
+A camada de estado central é definida em `chatStore.ts` e usa `persist` do Zustand. A chave de armazenamento é `chat-storage` e o `partialize` salva apenas a lista de conversas, preservando o histórico offline no navegador.
+
+## Regras de negócio importantes
+
+- cada mensagem é adicionada somente à conversa ativa;
+- ao excluir uma conversa, o active chat é limpo;
+- conversa sem seleção exibe estado vazio em vez de lista de mensagens;
+- a seleção de conversa não altera o histórico das demais conversas.
 
 ## Fora de escopo
 
-- Persistência (localStorage, backend, etc.)
-- Autenticação
-- Edição ou exclusão de mensagens
-- Horários, rótulos de remetente ou cabeçalho do chat
-- Markdown, anexos ou formatação rica (apenas texto plano)
-
-## Documentação
-
-Especificação completa do produto: [.docs/prd.md](.docs/prd.md)
+- backend ou sincronização entre dispositivos;
+- autenticação de usuários;
+- edição de mensagens;
+- anexos, markdown ou formatação rica;
+- histórico centralizado em servidor.
