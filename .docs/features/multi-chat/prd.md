@@ -275,7 +275,7 @@ As fases devem ser executadas em ordem. Uma fase só será considerada concluíd
 ### Checklist de execução
 
 - [x] Fase 1. Preparação da dependência e do modelo
-- [ ] Fase 2. Store de conversas
+- [x] Fase 2. Store de conversas
 - [ ] Fase 3. Integração da interface e do fluxo de mensagens
 - [ ] Fase 4. Responsividade e layout
 - [ ] Fase 5. Testes e validação final
