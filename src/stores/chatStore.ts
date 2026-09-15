@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import type { Conversation } from '../types/conversation'
 import type { Message } from '../types/message'
 
@@ -14,68 +15,76 @@ type ChatStore = {
     addMessage: (message: Message) => void
 }
 
-export const useChatStore = create<ChatStore>((set, get) => ({
-    conversations: [],
-    activeChatId: null,
-
-    createConversation: () => {
-        const conversationId = crypto.randomUUID()
-
-        set((state) => ({
-            conversations: [...state.conversations, { id: conversationId, messages: [] }],
-            activeChatId: conversationId,
-        }))
-    },
-
-    createChat: () => {
-        get().createConversation()
-    },
-
-    selectConversation: (chatId) => {
-        set((state) => {
-            const exists = state.conversations.some((conversation) => conversation.id === chatId)
-
-            if (!exists) {
-                return state
-            }
-
-            return { activeChatId: chatId }
-        })
-    },
-
-    selectChat: (chatId) => {
-        get().selectConversation(chatId)
-    },
-
-    deleteConversation: (chatId) => {
-        set((state) => ({
-            conversations: state.conversations.filter((conversation) => conversation.id !== chatId),
+export const useChatStore = create<ChatStore>()(
+    persist(
+        (set, get) => ({
+            conversations: [],
             activeChatId: null,
-        }))
-    },
 
-    deleteChat: (chatId) => {
-        get().deleteConversation(chatId)
-    },
+            createConversation: () => {
+                const conversationId = crypto.randomUUID()
 
-    addMessage: (message) => {
-        set((state) => {
-            if (!state.activeChatId) {
-                return state
-            }
+                set((state) => ({
+                    conversations: [...state.conversations, { id: conversationId, messages: [] }],
+                    activeChatId: conversationId,
+                }))
+            },
 
-            const conversations = state.conversations.map((conversation) => {
-                if (conversation.id !== state.activeChatId) {
-                    return conversation
-                }
+            createChat: () => {
+                get().createConversation()
+            },
 
-                return {
-                    ...conversation,
-                    messages: [...conversation.messages, message],
-                }
-            })
+            selectConversation: (chatId) => {
+                set((state) => {
+                    const exists = state.conversations.some((conversation) => conversation.id === chatId)
 
-            return { conversations }
-        })
-    },
-}))
+                    if (!exists) {
+                        return state
+                    }
+
+                    return { activeChatId: chatId }
+                })
+            },
+
+            selectChat: (chatId) => {
+                get().selectConversation(chatId)
+            },
+
+            deleteConversation: (chatId) => {
+                set((state) => ({
+                    conversations: state.conversations.filter((conversation) => conversation.id !== chatId),
+                    activeChatId: null,
+                }))
+            },
+
+            deleteChat: (chatId) => {
+                get().deleteConversation(chatId)
+            },
+
+            addMessage: (message) => {
+                set((state) => {
+                    if (!state.activeChatId) {
+                        return state
+                    }
+
+                    const conversations = state.conversations.map((conversation) => {
+                        if (conversation.id !== state.activeChatId) {
+                            return conversation
+                        }
+
+                        return {
+                            ...conversation,
+                            messages: [...conversation.messages, message],
+                        }
+                    })
+
+                    return { conversations }
+                })
+            },
+        }),
+        {
+            name: 'chat-storage',
+            partialize: (state) => ({ conversations: state.conversations }),
+        },
+    ),
+)

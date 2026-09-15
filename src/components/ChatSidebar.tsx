@@ -62,7 +62,7 @@ export default function ChatSidebar({
                     <div className="flex flex-col gap-2">
                         {chatIds.length === 0 ? (
                             <p className="rounded-xl border border-dashed border-white/15 px-3 py-3 text-sm leading-relaxed text-stone-500">
-                                Seus contextos aparecem aqui.
+                                Nenhuma conversa ainda
                             </p>
                         ) : (
                             chatIds.map((chatId) => {
