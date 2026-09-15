@@ -14,12 +14,18 @@ export default function MessageList({ messages, hasActiveChat = true }: MessageL
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
+  if (!hasActiveChat) {
+    return (
+      <div className="flex flex-1 items-center justify-center overflow-y-auto p-4 pb-6">
+        <p className="text-center text-stone-600">Crie ou selecione uma conversa</p>
+      </div>
+    )
+  }
+
   if (messages.length === 0) {
     return (
       <div className="flex flex-1 items-center justify-center overflow-y-auto p-4 pb-6">
-        <p className="text-center text-stone-600">
-          {hasActiveChat ? 'Nenhuma mensagem ainda. Envie a primeira!' : 'Crie uma conversa para começar.'}
-        </p>
+        <p className="text-center text-stone-600">Nenhuma mensagem ainda. Envie a primeira!</p>
       </div>
     )
   }

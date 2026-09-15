@@ -8,13 +8,17 @@ import MessageList from './MessageList'
 export default function Chat() {
   const [sender, setSender] = useState<Sender>('user')
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const { chats, activeChatId, createChat, selectChat, addMessage } = useChatStore()
-  const messages = activeChatId ? chats[activeChatId] : []
-  const chatIds = Object.keys(chats)
+  const { conversations, activeChatId, createConversation, selectConversation, addMessage } = useChatStore()
+
+  const activeConversation = conversations.find((conversation) => conversation.id === activeChatId) ?? null
+  const messages = activeConversation?.messages ?? []
 
   function handleSend(text: string) {
     const trimmedText = text.trim()
-    if (!trimmedText) return
+
+    if (!trimmedText || !activeChatId) {
+      return
+    }
 
     const message: Message = {
       id: crypto.randomUUID(),
@@ -26,7 +30,7 @@ export default function Chat() {
   }
 
   function handleToggleSender() {
-    setSender(sender === 'user' ? 'robot' : 'user')
+    setSender((currentSender) => (currentSender === 'user' ? 'robot' : 'user'))
   }
 
   return (
@@ -34,26 +38,32 @@ export default function Chat() {
       <button
         type="button"
         onClick={() => setIsSidebarOpen(true)}
-        className="fixed left-4 top-4 z-10 rounded-lg bg-stone-900 px-3 py-2 text-xl text-white shadow-md md:hidden"
+        className="fixed left-4 top-4 z-30 rounded-lg bg-stone-900 px-3 py-2 text-xl text-white shadow-md md:hidden"
         aria-label="Abrir menu de conversas"
+        aria-expanded={isSidebarOpen}
       >
         ☰
       </button>
+
       <ChatSidebar
-        chatIds={chatIds}
+        chatIds={conversations.map((conversation) => conversation.id)}
         activeChatId={activeChatId}
         isOpen={isSidebarOpen}
         onCreateChat={() => {
-          createChat()
+          createConversation()
           setIsSidebarOpen(false)
         }}
         onSelectChat={(chatId) => {
-          selectChat(chatId)
+          selectConversation(chatId)
           setIsSidebarOpen(false)
+        }}
+        onDeleteChat={(chatId) => {
+          useChatStore.getState().deleteConversation(chatId)
         }}
         onClose={() => setIsSidebarOpen(false)}
       />
-      <main className="mx-auto flex h-dvh w-full max-w-2xl flex-col">
+
+      <main className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col">
         <MessageList messages={messages} hasActiveChat={activeChatId !== null} />
         <ChatInput
           sender={sender}

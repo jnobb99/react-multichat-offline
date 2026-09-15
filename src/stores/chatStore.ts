@@ -4,7 +4,6 @@ import type { Message } from '../types/message'
 
 type ChatStore = {
     conversations: Conversation[]
-    chats: Record<string, Message[]>
     activeChatId: string | null
     createConversation: () => void
     createChat: () => void
@@ -15,26 +14,17 @@ type ChatStore = {
     addMessage: (message: Message) => void
 }
 
-const mapConversationsToChats = (conversations: Conversation[]) =>
-    Object.fromEntries(conversations.map((conversation) => [conversation.id, conversation.messages]))
-
 export const useChatStore = create<ChatStore>((set, get) => ({
     conversations: [],
-    chats: {},
     activeChatId: null,
 
     createConversation: () => {
         const conversationId = crypto.randomUUID()
 
-        set((state) => {
-            const conversations = [...state.conversations, { id: conversationId, messages: [] }]
-
-            return {
-                conversations,
-                chats: mapConversationsToChats(conversations),
-                activeChatId: conversationId,
-            }
-        })
+        set((state) => ({
+            conversations: [...state.conversations, { id: conversationId, messages: [] }],
+            activeChatId: conversationId,
+        }))
     },
 
     createChat: () => {
@@ -44,7 +34,10 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     selectConversation: (chatId) => {
         set((state) => {
             const exists = state.conversations.some((conversation) => conversation.id === chatId)
-            if (!exists) return state
+
+            if (!exists) {
+                return state
+            }
 
             return { activeChatId: chatId }
         })
@@ -55,15 +48,10 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     },
 
     deleteConversation: (chatId) => {
-        set((state) => {
-            const conversations = state.conversations.filter((conversation) => conversation.id !== chatId)
-
-            return {
-                conversations,
-                chats: mapConversationsToChats(conversations),
-                activeChatId: null,
-            }
-        })
+        set((state) => ({
+            conversations: state.conversations.filter((conversation) => conversation.id !== chatId),
+            activeChatId: null,
+        }))
     },
 
     deleteChat: (chatId) => {
@@ -87,10 +75,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
                 }
             })
 
-            return {
-                conversations,
-                chats: mapConversationsToChats(conversations),
-            }
+            return { conversations }
         })
     },
 }))
