@@ -57,9 +57,9 @@ export default function ChatInput({ sender, disabled = false, onToggleSender, on
   const isUser = sender === 'user'
 
   return (
-    <div className={`px-4 pb-4 transition-opacity ${disabled ? 'opacity-50' : ''}`} aria-disabled={disabled}>
+    <div className={`px-4 pb-5 transition-opacity ${disabled ? 'opacity-50' : ''}`} aria-disabled={disabled}>
       <div
-        className={`rounded-lg border-2 bg-white p-4 shadow-md transition-colors duration-200 ${isUser ? 'border-stone-200' : 'border-purple-500'
+        className={`rounded-2xl border bg-white p-3 shadow-[0_12px_30px_rgba(70,63,52,0.08)] transition-colors duration-200 ${isUser ? 'border-stone-300' : 'border-teal-400'
           }`}
       >
         <div className="flex items-end gap-3">
@@ -76,14 +76,14 @@ export default function ChatInput({ sender, disabled = false, onToggleSender, on
             disabled={disabled}
             placeholder="Digite uma mensagem..."
             rows={1}
-            className="max-h-36 min-h-10 flex-1 resize-none bg-transparent px-1 py-2 text-stone-800 placeholder:text-stone-400 focus:outline-none disabled:cursor-not-allowed"
+            className="max-h-36 min-h-10 flex-1 resize-none bg-transparent px-1 py-2 text-[15px] leading-6 text-stone-800 placeholder:text-stone-400 focus:outline-none disabled:cursor-not-allowed"
           />
 
           <button
             type="button"
             onClick={handleSend}
             disabled={!canSend}
-            className="rounded-lg bg-stone-800 px-4 py-2 text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-xl bg-[#18201f] px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-40"
             aria-label="Enviar mensagem"
           >
             Enviar

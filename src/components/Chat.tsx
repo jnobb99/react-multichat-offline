@@ -34,12 +34,12 @@ export default function Chat() {
   }
 
   return (
-    <div className="h-dvh overflow-hidden bg-stone-200 md:grid md:grid-cols-[18rem_minmax(0,1fr)]">
+    <div className="h-dvh overflow-hidden bg-[#eeeae1] md:grid md:grid-cols-[18rem_minmax(0,1fr)]">
       {!isSidebarOpen && (
         <button
           type="button"
           onClick={() => setIsSidebarOpen(true)}
-          className="fixed left-4 top-4 z-30 rounded-lg bg-stone-900 px-3 py-2 text-xl text-white shadow-md md:hidden"
+          className="fixed left-4 top-4 z-30 rounded-xl border border-white/10 bg-[#18201f] px-3 py-2 text-xl text-white shadow-xl shadow-stone-900/20 transition-transform hover:scale-105 md:hidden"
           aria-label="Abrir menu de conversas"
           aria-expanded={false}
           aria-controls="chat-sidebar"
@@ -66,7 +66,7 @@ export default function Chat() {
         onClose={() => setIsSidebarOpen(false)}
       />
 
-      <main className="mx-auto flex h-dvh min-h-0 w-full max-w-2xl flex-col pt-20 md:pt-0">
+      <main className="mx-auto flex h-dvh min-h-0 w-full max-w-2xl flex-col border-x border-stone-300/70 bg-[#f5f2eb] pt-20 shadow-[0_0_60px_rgba(70,63,52,0.06)] md:pt-0">
         <MessageList messages={messages} hasActiveChat={activeChatId !== null} />
         <ChatInput
           sender={sender}

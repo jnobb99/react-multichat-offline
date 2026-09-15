@@ -30,15 +30,18 @@ export default function ChatSidebar({
 
             <aside
                 id="chat-sidebar"
-                className={`fixed inset-y-0 left-0 z-20 flex w-72 flex-col overflow-hidden bg-stone-900 p-4 text-stone-100 transition-transform duration-200 md:static md:w-72 md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+                className={`fixed inset-y-0 left-0 z-20 flex w-72 flex-col overflow-hidden border-r border-white/10 bg-[#18201f] p-4 text-stone-100 shadow-2xl shadow-stone-950/20 transition-transform duration-200 md:static md:w-72 md:translate-x-0 md:shadow-none ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
                     }`}
             >
-                <div className="mb-4 flex items-center justify-between">
-                    <h1 className="text-lg font-semibold">Conversas</h1>
+                <div className="mb-8 flex items-start justify-between">
+                    <div>
+                        <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.24em] text-teal-300">Offline studio</p>
+                        <h1 className="font-serif text-2xl font-semibold tracking-tight text-stone-50">Conversas</h1>
+                    </div>
                     <button
                         type="button"
                         onClick={onClose}
-                        className="rounded-md px-2 py-1 text-xl text-stone-300 hover:bg-stone-800 md:hidden"
+                        className="rounded-lg px-2 py-1 text-xl text-stone-400 transition-colors hover:bg-white/10 hover:text-white md:hidden"
                         aria-label="Fechar menu"
                     >
                         ×
@@ -48,17 +51,18 @@ export default function ChatSidebar({
                 <button
                     type="button"
                     onClick={onCreateChat}
-                    className="mb-4 rounded-lg bg-stone-100 px-3 py-1.5 text-left text-sm font-medium text-stone-900 transition-colors hover:bg-white"
+                    className="mb-5 flex items-center justify-between rounded-xl bg-teal-300 px-4 py-3 text-left text-sm font-bold text-[#18201f] shadow-lg shadow-teal-950/20 transition-transform hover:-translate-y-0.5 hover:bg-teal-200"
                     aria-label="Criar nova conversa"
                 >
-                    + Nova conversa
+                    <span>Nova conversa</span>
+                    <span aria-hidden="true" className="text-xl leading-none">+</span>
                 </button>
 
                 <nav aria-label="Lista de conversas" className="min-h-0 flex-1 overflow-y-auto">
                     <div className="flex flex-col gap-2">
                         {chatIds.length === 0 ? (
-                            <p className="rounded-lg border border-dashed border-stone-700 px-3 py-2 text-sm text-stone-400">
-                                Nenhuma conversa
+                            <p className="rounded-xl border border-dashed border-white/15 px-3 py-3 text-sm leading-relaxed text-stone-500">
+                                Seus contextos aparecem aqui.
                             </p>
                         ) : (
                             chatIds.map((chatId) => {
@@ -67,9 +71,9 @@ export default function ChatSidebar({
                                 return (
                                     <div
                                         key={chatId}
-                                        className={`flex items-center gap-2 rounded-lg border transition-colors ${isActive
-                                            ? 'border-stone-500 bg-stone-700 text-white'
-                                            : 'border-transparent bg-stone-800/40 text-stone-300 hover:bg-stone-800 hover:text-white'
+                                        className={`flex items-center gap-2 rounded-xl border transition-colors ${isActive
+                                            ? 'border-teal-300/60 bg-teal-300/10 text-white shadow-inner shadow-teal-300/5'
+                                            : 'border-transparent bg-white/5 text-stone-400 hover:bg-white/8 hover:text-white'
                                             }`}
                                     >
                                         <button
@@ -77,8 +81,9 @@ export default function ChatSidebar({
                                             onClick={() => onSelectChat(chatId)}
                                             aria-pressed={isActive}
                                             aria-label={isActive ? `Conversa ativa ${chatId}` : `Selecionar conversa ${chatId}`}
-                                            className="flex-1 truncate px-3 py-2 text-left text-sm"
+                                            className="flex-1 truncate px-3 py-2.5 text-left font-mono text-[11px]"
                                         >
+                                            <span className="mr-2 text-teal-300" aria-hidden="true">{isActive ? '●' : '○'}</span>
                                             {chatId}
                                         </button>
 
@@ -88,7 +93,7 @@ export default function ChatSidebar({
                                                 event.stopPropagation()
                                                 onDeleteChat(chatId)
                                             }}
-                                            className="mr-2 rounded-md p-1.5 text-stone-300 transition-colors hover:bg-stone-700 hover:text-white"
+                                            className="mr-2 rounded-lg p-1.5 text-stone-500 transition-colors hover:bg-rose-400/15 hover:text-rose-200"
                                             aria-label={`Excluir conversa ${chatId}`}
                                             title={`Excluir ${chatId}`}
                                         >
